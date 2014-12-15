@@ -1,0 +1,116 @@
+# This is an auto-generated Django model module.
+# You'll have to do the following manually to clean this up:
+#   * Rearrange models' order
+#   * Make sure each model has one field with primary_key=True
+#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
+# Feel free to rename the models, but don't rename db_table values or field names.
+#
+# Also note: You'll have to insert the output of 'django-admin.py sqlcustom [app_label]'
+# into your database.
+from __future__ import unicode_literals
+
+from django.db import models
+
+
+'''
+class RatAssociado(models.Model):
+    codigo = models.IntegerField(primary_key=True)
+    cod_circuito = models.CharField(max_length=255, blank=True)
+    cod_status = models.IntegerField(blank=True, null=True)
+    data = models.DateTimeField(blank=True, null=True)
+    data_associado = models.DateField(blank=True, null=True)
+    data_atua = models.DateTimeField(blank=True, null=True)
+    data_atua_cad = models.DateTimeField(blank=True, null=True)
+    exibir_pontos = models.CharField(max_length=3, blank=True)
+    nome_instituicao = models.CharField(max_length=255, blank=True)
+    matricula = models.CharField(max_length=100)
+    adm = models.IntegerField(blank=True, null=True)
+    grupo = models.IntegerField(blank=True, null=True)
+    sess = models.CharField(max_length=255, blank=True)
+    ultimo_acesso = models.DateTimeField(blank=True, null=True)
+    usurem = models.CharField(max_length=255, blank=True)
+    outro_tipo_circuito = models.CharField(max_length=255, blank=True)
+    razao_social = models.CharField(max_length=255, blank=True)
+    cnpj = models.CharField(max_length=14, blank=True)
+    endereco = models.TextField(blank=True)
+    numero = models.CharField(max_length=50, blank=True)
+    complemento = models.CharField(max_length=50, blank=True)
+    bairro = models.CharField(max_length=45, blank=True)
+    referencia = models.TextField(blank=True)
+    cod_municipio = models.IntegerField(blank=True, null=True)
+    txt_cidade = models.CharField(max_length=250, blank=True)
+    txt_estado = models.CharField(max_length=50, blank=True)
+    cod_estado = models.IntegerField(blank=True, null=True)
+    cep = models.CharField(max_length=8, blank=True)
+    website = models.CharField(max_length=100, blank=True)
+    res_nome = models.CharField(max_length=255, blank=True)
+    res_sexo = models.CharField(max_length=3, blank=True)
+    res_cpf = models.CharField(max_length=11, blank=True)
+    res_cargo = models.TextField(blank=True)
+    res_email = models.CharField(max_length=255, blank=True)
+    res_tel1_ddd = models.CharField(max_length=3, blank=True)
+    res_tel1 = models.CharField(max_length=50, blank=True)
+    res_tel1_ramal = models.CharField(max_length=50, blank=True)
+    res_tel2_ddd = models.CharField(max_length=3, blank=True)
+    res_tel2 = models.CharField(max_length=50, blank=True)
+    res_tel3_ddd = models.CharField(max_length=3, blank=True)
+    res_tel3 = models.CharField(max_length=50, blank=True)
+    senha = models.CharField(max_length=100, blank=True)
+    info_atividades = models.TextField(blank=True)
+    info_como_serao_utilizados = models.TextField(blank=True)
+    info_cod_sabendo = models.IntegerField(blank=True, null=True)
+    info_sabendo_orgao = models.CharField(max_length=50, blank=True)
+    info_filmes_exibidos = models.TextField(blank=True)
+    info_sabendo_outro = models.CharField(max_length=50, blank=True)
+    info_pref_formato = models.CharField(max_length=50, blank=True)
+    info_pref_genero = models.CharField(max_length=50, blank=True)
+    info_parceiros_cult = models.TextField(blank=True)
+    info_cineclube = models.CharField(max_length=255, blank=True)
+    info_sess_aberto = models.CharField(max_length=3, blank=True)
+    info_sess_aberto_frequencia = models.IntegerField(blank=True, null=True)
+    info_sess_aberto_frequencia_outro = models.CharField(max_length=255, blank=True)
+    info_sess_fechado = models.CharField(max_length=3, blank=True)
+    info_sess_fechado_frequencia = models.IntegerField(blank=True, null=True)
+    info_sess_fechado_frequencia_outro = models.CharField(max_length=255, blank=True)
+    info_hora_sess = models.CharField(max_length=50, blank=True)
+    info_media_espectadores = models.CharField(max_length=50, blank=True)
+    info_perfil_espectadores = models.TextField(blank=True)
+    info_sess_cobrada = models.CharField(max_length=3, blank=True)
+    info_sess_taxa = models.CharField(max_length=3, blank=True)
+    info_sess_valor = models.FloatField(blank=True, null=True)
+    info_debate = models.CharField(max_length=3, blank=True)
+    info_cursos = models.CharField(max_length=3, blank=True)
+    info_acervo = models.CharField(max_length=3, blank=True)
+    info_acervo_proprio = models.CharField(max_length=3, blank=True)
+    info_realiza_prod = models.CharField(max_length=3, blank=True)
+    info_meio_divulga = models.IntegerField(blank=True, null=True)
+    info_acao_biblioteca = models.CharField(max_length=3, blank=True)
+    info_dist_folheto = models.CharField(max_length=3, blank=True)
+    leg_nome = models.CharField(max_length=255, blank=True)
+    leg_sexo = models.CharField(max_length=3, blank=True)
+    leg_cpf = models.CharField(max_length=11, blank=True)
+    leg_cargo = models.TextField(blank=True)
+    leg_email = models.CharField(max_length=255, blank=True)
+    leg_tel1_ddd = models.CharField(max_length=3, blank=True)
+    leg_tel1 = models.CharField(max_length=50, blank=True)
+    leg_tel1_ramal = models.CharField(max_length=50, blank=True)
+    leg_tel2_ddd = models.CharField(max_length=3, blank=True)
+    leg_tel2 = models.CharField(max_length=50, blank=True)
+    leg_tel3_ddd = models.CharField(max_length=3, blank=True)
+    leg_tel3 = models.CharField(max_length=50, blank=True)
+    obs = models.TextField(blank=True)
+    permite_cad_ponto = models.CharField(max_length=3, blank=True)
+    conta_acesso = models.IntegerField(blank=True, null=True)
+    est_pedidos = models.IntegerField(blank=True, null=True)
+    est_programas = models.IntegerField(blank=True, null=True)
+    est_publico = models.IntegerField(blank=True, null=True)
+    est_dias_cadastro = models.IntegerField(blank=True, null=True)
+    est_consulta_local = models.IntegerField(blank=True, null=True)
+    est_acessos = models.IntegerField(blank=True, null=True)
+    est_sess_realizadas = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'rat_associado'
+
+'''
