@@ -1,8 +1,8 @@
 from rest_framework import serializers
-#from .models import RatAssociado
+from .models import Associado
 
-#class AssociadoSerializer(serializers.ModelSerializer):
+class AssociadoSerializer(serializers.ModelSerializer):
 
-#    class Meta:
-#        model = RatAssociado
-#        fields = ('codigo', 'nome_instituicao')
+    class Meta:
+        model = Associado
+        fields = ('id', 'nome_instituicao')
