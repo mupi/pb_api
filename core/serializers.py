@@ -5,4 +5,4 @@ class AssociadoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Associado
-        fields = ('id', 'nome_instituicao')
+        fields = ('id', 'nome_instituicao', 'matricula')

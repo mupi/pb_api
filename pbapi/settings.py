@@ -38,7 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     #Rest-api
-  #  'rest_framework',
+    'rest_framework',
 
     #Programadora
     'core',
