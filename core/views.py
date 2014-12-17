@@ -1,55 +1,50 @@
-from django.http import HttpResponse
-from django.views.generic import TemplateView,ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render, redirect, get_object_or_404
-from django.forms import ModelForm
+from django.shortcuts import get_object_or_404
+from rest_framework import viewsets, generics, status
+from rest_framework.response import Response
 
-from rest_framework import generics
+from .serializers import UserSerializer
 
-from .models import Associado, Programa
-from .serializers import AssociadoSerializer, ProgramaSerializer
+from django.contrib.auth.models import User
 
-class AssociadoListView(generics.ListAPIView):
-    queryset = Associado.objects.all()
-    serializer_class = AssociadoSerializer;
+class UserViewSet(viewsets.ViewSet):
 
-class ProgramaListView(generics.ListAPIView):
-    queryset = Programa.objects.all()
-    serializer_class = ProgramaSerializer;
+    def list(self, request):
+        queryset = User.objects.all()
+        serializer = UserSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-class ProgramaDetailView(generics.RetrieveAPIView):
-    queryset = Programa.objects.all()
-    serializer_class = ProgramaSerializer
+    def retrieve(self, request, pk=None):
+        queryset = User.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
-class ProgramaForm(ModelForm):
-    class Meta:
-        model = Programa
+    def create(self, request):
+        if request.method == 'POST':
+	        serializer = UserSerializer(data=request.DATA)
 
-def programa_list(request, template_name='core/programa_list.html'):
-    programas = Programa.objects.all()
-    data = {}
-    data['object_list'] = programas
-    return render(request, template_name, data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def programa_create(request, template_name='core/form.html'):
-    form = ProgramaForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('programa_list')
-    return render(request, template_name, {'form':form})
+    def update(self, request, pk=None):
+        if request.method == 'PUT':
+	        serializer = UserSerializer(data=request.DATA)
 
-def programa_update(request, pk, template_name='core/form.html'):
-    programa = get_object_or_404(Programa, pk=pk)
-    form = ProgramaForm(request.POST or None, instance=programa)
-    if form.is_valid():
-        form.save()
-        return redirect('programa_list')
-    return render(request, template_name, {'form':form})
+        if serializer.is_valid():
+            serializer.update()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+        	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-def programa_delete(request, pk, template_name='core/confirm_delete.html'):
-    programa = get_object_or_404(Programa, pk=pk)    
-    if request.method=='POST':
-        programa.delete()
-        return redirect('programa_list')
-    return render(request, template_name, {'object':programa})
+    def destroy(self, request, pk=None):
+        if request.method == 'DELETE':
+	        serializer = UserSerializer(data=request.DATA)
+
+        if serializer.is_valid():
+            serializer.delete()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+        	return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
