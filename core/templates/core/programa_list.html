@@ -1,0 +1,11 @@
+<h1>programas</h1>
+<ul>
+    {% for programa in object_list %}
+    <li>{{ programa.id }}  :  
+    <a href="{% url "programa_edit" programa.id %}">{{ programa.ip }}</a>
+    <a href="{% url "programa_delete" programa.id %}">delete</a>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url "programa_new" %}">New</a>
