@@ -82,10 +82,7 @@ class FaixaEtariaSerializer(serializers.ModelSerializer):
     class Meta:
         model = FaixaEtaria
  
-class FilmeSerializer(serializers.ModelSerializer): 
-    class Meta:
-        model = Filme
- 
+
 class FilmeComentarioSerializer(serializers.ModelSerializer): 
     class Meta:
         model = FilmeComentario
@@ -121,7 +118,13 @@ class FilmeSuporteDisponivelSerializer(serializers.ModelSerializer):
 class FilmeTecnicaAnimacaoSerializer(serializers.ModelSerializer): 
     class Meta:
         model = FilmeTecnicaAnimacao
- 
+
+class FilmeSerializer(serializers.ModelSerializer): 
+    imagens = FilmeImagemSerializer(many=True, read_only=True)
+    diretores = FilmeDiretorSerializer(many=True, read_only=True)
+    class Meta:
+        model = Filme
+
 class FormatoSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Formato
@@ -182,10 +185,6 @@ class ProdutorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Produtor
  
-class ProgramaSerializer(serializers.ModelSerializer): 
-    class Meta:
-        model = Programa
- 
 class ProgramaComentarioSerializer(serializers.ModelSerializer): 
     class Meta:
         model = ProgramaComentario
@@ -198,6 +197,12 @@ class ProgramaImagemSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProgramaImagem
  
+class ProgramaSerializer(serializers.ModelSerializer): 
+    filmes = ProgramaFilmeSerializer(many=True, read_only=True)
+    imagens = ProgramaImagemSerializer(many=True, read_only=True)
+    class Meta:
+        model = Programa
+
 class ProgramaProducaoSerializer(serializers.ModelSerializer): 
     class Meta:
         model = ProgramaProducao

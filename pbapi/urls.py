@@ -75,6 +75,11 @@ router.register(r'tempquemadquiriu',  TempQuemAdquiriuViewSet, 'TempQuemAdquiriu
 router.register(r'usuario',  UsuarioViewSet, 'UsuarioList')
 router.register(r'usuariopermissao',  UsuarioPermissaoViewSet, 'UsuarioPermissaoList')
 router.register(r'valorlote',  ValorLoteViewSet, 'ValorLoteList')
-urlpatterns = router.urls
+
+urlpatterns = patterns('',
+    url(r'^admin/', include(admin.site.urls)),
+)
+
+urlpatterns += router.urls
 
 admin.autodiscover()

@@ -66,6 +66,9 @@ ROOT_URLCONF = 'pbapi.urls'
 
 WSGI_APPLICATION = 'pbapi.wsgi.application'
 
+REST_FRAMEWORK = {
+    'PAGINATE_BY': 10
+}
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases

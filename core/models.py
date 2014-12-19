@@ -564,7 +564,7 @@ class FilmeComentario(models.Model):
 
 class FilmeDiretor(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    filme = models.ForeignKey(Filme)
+    filme = models.ForeignKey(Filme, related_name='diretores')
     diretor = models.ForeignKey(Diretor)
 
     class Meta:
@@ -576,7 +576,7 @@ class FilmeImagem(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     url = models.CharField(max_length=255, blank=True)
     tipo = models.IntegerField(blank=True, null=True)
-    filme = models.ForeignKey(Filme, blank=True, null=True)
+    filme = models.ForeignKey(Filme, blank=True, null=True, related_name='imagens')
 
     class Meta:
         managed = False
@@ -878,7 +878,7 @@ class ProgramaComentario(models.Model):
 class ProgramaFilme(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     filme_id = models.IntegerField(blank=True, null=True)
-    programa = models.ForeignKey(Programa, blank=True, null=True)
+    programa = models.ForeignKey(Programa, blank=True, null=True, related_name='filmes')
     peso = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -890,7 +890,7 @@ class ProgramaImagem(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     url = models.CharField(max_length=255, blank=True)
     tipo = models.IntegerField(blank=True, null=True)
-    programa = models.ForeignKey(Programa, blank=True, null=True)
+    programa = models.ForeignKey(Programa, blank=True, null=True, related_name='imagens')
 
     class Meta:
         managed = False
