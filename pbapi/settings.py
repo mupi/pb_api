@@ -42,6 +42,9 @@ INSTALLED_APPS = (
 
     #Programadora
     'core',
+
+    #cors
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,7 +55,12 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'pbapi.urls'
 
