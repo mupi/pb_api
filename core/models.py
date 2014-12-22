@@ -1221,3 +1221,38 @@ class ValorLote(models.Model):
     class Meta:
         managed = False
         db_table = 'valor_lote'
+
+class Estoque(models.Model):
+    num_serie = models.IntegerField(primary_key=True)
+    titulo = models.CharField(max_length=255, db_index=True)
+    qtde_online = models.IntegerField(blank=True, null=True)
+    aguardando_pagamento = models.IntegerField(blank=True, null=True)
+    pagamento_efetuado = models.IntegerField(blank=True, null=True)
+    enviado = models.IntegerField(blank=True, null=True)
+    quantidade_estoque = models.IntegerField(blank=True, null=True)
+    disponivel_aquisicao = models.IntegerField(blank=True, null=True)
+
+    @property
+    def disponivel(self):
+        return 'SIM' if self.disponivel_aquisicao == 1 else 'NAO'
+
+    @property
+    def total(self):
+        return self.qtde_online + self.quantidade_estoque
+
+    @property
+    def total_geral(self):
+        return self.total + self.aguardando_pagamento + self.pagamento_efetuado + self.enviado
+
+    class Meta:
+        managed = False
+        db_table = 'estoque'
+
+    def save(self, **kwargs):
+        raise NotImplementedError
+
+    def save(self, **kwargs):
+        raise NotImplementedError
+
+    def delete(self, **kwargs):
+        raise NotImplementedError

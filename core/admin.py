@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from core.models import Associado, AssociadoCircuito, AssociadoHistorico, AssociadoPonto, Atendimento, Circuito, CircuitoAcesso, CircuitoGrupo, CircuitoSerie, Contrato, ContratoAssinatura, ContratoDeposito, Convenio, Cupom, Curador, CuradorFilme, Diretor, Estado, Evento, FaixaEtaria, Filme, FilmeComentario, FilmeDiretor, FilmeImagem, FilmeInscritoPb, FilmeLegenda, FilmeMaterialSobreFilme, FilmeSerie, FilmeSuporteDisponivel, FilmeTecnicaAnimacao, Formato, Genero, GeneroSub, Helpdesk, Idioma, LogSistema, MaterialSobreFilme, Modulo, Municipio, Newsletter, Pedido, PedidoHistorico, PedidoPrograma, PedidoStatus, Produtor, Programa, ProgramaComentario, ProgramaFilme, ProgramaImagem, ProgramaProducao, ProgramaSerie, Publicacao, PublicacaoClasse, PublicacaoComentario, PublicacaoSubclasse, Regiao, Representante, Serie, Sessao, SessaoComentario, SessaoFilme, SessaoMidia, SessaoRelatorio, Sistema, Tarefa, TarefaPergunta, TecnicaAnimacao, TempQuemAdquiriu, Usuario, UsuarioPermissao, ValorLote
+from core.models import *
 
 class AssociadoAdmin(admin.ModelAdmin):
     model = Associado
@@ -434,3 +434,18 @@ class ValorLoteAdmin(admin.ModelAdmin):
 
 admin.site.register(ValorLote, ValorLoteAdmin)
 
+class EstoqueAdmin(admin.ModelAdmin):
+    name = "Estoque"
+    list_display = ('disponivel', 'num_serie', 'titulo', 'qtde_online', 'aguardando_pagamento', 'pagamento_efetuado', 'enviado', 'quantidade_estoque', 'total', 'total_geral')
+    ordering = ('num_serie',)
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def save_model(self, request, obj, form, change):
+        pass
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+admin.site.register(Estoque, EstoqueAdmin)
