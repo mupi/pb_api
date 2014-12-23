@@ -1226,23 +1226,33 @@ class Estoque(models.Model):
     num_serie = models.IntegerField(primary_key=True)
     titulo = models.CharField(max_length=255, db_index=True)
     qtde_online = models.IntegerField(blank=True, null=True)
-    aguardando_pagamento = models.IntegerField(blank=True, null=True)
-    pagamento_efetuado = models.IntegerField(blank=True, null=True)
+    aguardando_pgto = models.IntegerField(blank=True, null=True)
+    pgto_efetuado = models.IntegerField(blank=True, null=True)
     enviado = models.IntegerField(blank=True, null=True)
-    quantidade_estoque = models.IntegerField(blank=True, null=True)
+    qtde_estoque = models.IntegerField(blank=True, null=True)
     disponivel_aquisicao = models.IntegerField(blank=True, null=True)
+    programa_id = models.IntegerField(blank=True, null=True)
+    qtde_adquirida_associados = models.IntegerField(blank=True, null=True)
+    qtde_doada = models.IntegerField(blank=True, null=True)
+    qtde_realizador = models.IntegerField(blank=True, null=True)
+    qtde_outros = models.IntegerField(blank=True, null=True)
+    pedidos_pgto_confirmado = models.CharField(max_length=2500, null=True)
 
     @property
     def disponivel(self):
         return 'SIM' if self.disponivel_aquisicao == 1 else 'NAO'
 
     @property
-    def total(self):
-        return self.qtde_online + self.quantidade_estoque
+    def total_estoque(self):
+        return self.qtde_online + self.qtde_estoque
 
     @property
     def total_geral(self):
-        return self.total + self.aguardando_pagamento + self.pagamento_efetuado + self.enviado
+        return self.total_estoque + self.aguardando_pgto + self.pgto_efetuado + self.enviado
+
+    @property
+    def total_adquirido(self):
+        return self.qtde_adquirida_associados + self.qtde_doada + self.qtde_realizador + self.qtde_outros
 
     class Meta:
         managed = False

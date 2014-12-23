@@ -246,6 +246,7 @@ admin.site.register(Newsletter, NewsletterAdmin)
 class PedidoAdmin(admin.ModelAdmin):
     model = Pedido
     list_display = ('id', 'status', 'tipo', 'usuario_id', 'matricula', 'nome_usuario')
+    list_filter = ('status',)
 
 admin.site.register(Pedido, PedidoAdmin)
 
@@ -275,7 +276,8 @@ admin.site.register(Produtor, ProdutorAdmin)
 
 class ProgramaAdmin(admin.ModelAdmin):
     model = Programa
-    list_display = ('id', 'data', 'titulo')
+    list_display = ('id', 'titulo', 'num_serie')
+    ordering = ('num_serie',)
 
 admin.site.register(Programa, ProgramaAdmin)
 
@@ -436,8 +438,10 @@ admin.site.register(ValorLote, ValorLoteAdmin)
 
 class EstoqueAdmin(admin.ModelAdmin):
     name = "Estoque"
-    list_display = ('disponivel', 'num_serie', 'titulo', 'qtde_online', 'aguardando_pagamento', 'pagamento_efetuado', 'enviado', 'quantidade_estoque', 'total', 'total_geral')
+    list_display = ('disponivel', 'num_serie', 'titulo', 'qtde_online', 'aguardando_pgto', 'pgto_efetuado', 'enviado', 'qtde_estoque', 'total_estoque', 'total_geral', 'qtde_adquirida_associados', 'qtde_doada', 'qtde_realizador', 'qtde_outros', 'total_adquirido', 'pedidos_pgto_confirmado')
     ordering = ('num_serie',)
+    list_filter = ('num_serie')
+    list_per_page = 10
 
     def has_add_permission(self, request, obj=None):
         return False
