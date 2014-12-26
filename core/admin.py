@@ -440,7 +440,7 @@ class EstoqueAdmin(admin.ModelAdmin):
     name = "Estoque"
     list_display = ('disponivel', 'num_serie', 'titulo', 'qtde_online', 'aguardando_pgto', 'pgto_efetuado', 'enviado', 'qtde_estoque', 'total_estoque', 'total_geral', 'qtde_adquirida_associados', 'qtde_doada', 'qtde_realizador', 'qtde_outros', 'total_adquirido', 'pedidos_pgto_confirmado')
     ordering = ('num_serie',)
-    list_filter = ('num_serie')
+    list_filter = ('num_serie',)
     list_per_page = 10
 
     def has_add_permission(self, request, obj=None):
