@@ -66,10 +66,7 @@ class CuradorFilmeSerializer(serializers.ModelSerializer):
     class Meta:
         model = CuradorFilme
  
-class DiretorSerializer(serializers.ModelSerializer): 
-    class Meta:
-        model = Diretor
- 
+
 class EstadoSerializer(serializers.ModelSerializer): 
     class Meta:
         model = Estado
@@ -124,6 +121,11 @@ class FilmeSerializer(serializers.ModelSerializer):
     diretores = FilmeDiretorSerializer(many=True, read_only=True)
     class Meta:
         model = Filme
+
+class DiretorSerializer(serializers.ModelSerializer): 
+    filmes = FilmeDiretorSerializer(many=True, read_only=True)
+    class Meta:
+        model = Diretor
 
 class FormatoSerializer(serializers.ModelSerializer): 
     class Meta:

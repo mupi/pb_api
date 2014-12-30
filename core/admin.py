@@ -447,7 +447,7 @@ class EstoqueAdmin(admin.ModelAdmin):
         return False
 
     def save_model(self, request, obj, form, change):
-        pass
+        pass #remove a acao de salvar e atualizar, ja que Estoque nao eh um model
 
     def has_delete_permission(self, request, obj=None):
         return False

@@ -565,7 +565,7 @@ class FilmeComentario(models.Model):
 class FilmeDiretor(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     filme = models.ForeignKey(Filme, related_name='diretores')
-    diretor = models.ForeignKey(Diretor)
+    diretor = models.ForeignKey(Diretor, related_name='filmes')
 
     class Meta:
         managed = False
