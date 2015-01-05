@@ -77,9 +77,11 @@ router.register(r'usuariopermissao',  UsuarioPermissaoViewSet, 'UsuarioPermissao
 router.register(r'valorlote',  ValorLoteViewSet, 'ValorLoteList')
 
 urlpatterns = patterns('',
+    url(r'^', include(router.urls)),
+    (r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^admin/', include(admin.site.urls)),
 )
 
-urlpatterns += router.urls
+# urlpatterns += router.urls
 
 admin.autodiscover()
