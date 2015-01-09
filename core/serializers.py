@@ -285,10 +285,6 @@ class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
  
-class UsuarioPermissaoSerializer(serializers.ModelSerializer): 
-    class Meta:
-        model = UsuarioPermissao
- 
 class ValorLoteSerializer(serializers.ModelSerializer): 
     class Meta:
         model = ValorLote

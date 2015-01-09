@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from core.views import  AssociadoViewSet, AssociadoCircuitoViewSet, AssociadoHistoricoViewSet, AssociadoPontoViewSet, AtendimentoViewSet, CircuitoViewSet, CircuitoAcessoViewSet, CircuitoGrupoViewSet, CircuitoSerieViewSet, ContratoViewSet, ContratoAssinaturaViewSet, ContratoDepositoViewSet, ConvenioViewSet, CupomViewSet, CuradorViewSet, CuradorFilmeViewSet, DiretorViewSet, EstadoViewSet, EventoViewSet, FaixaEtariaViewSet, FilmeViewSet, FilmeComentarioViewSet, FilmeDiretorViewSet, FilmeImagemViewSet, FilmeInscritoPbViewSet, FilmeLegendaViewSet, FilmeMaterialSobreFilmeViewSet, FilmeSerieViewSet, FilmeSuporteDisponivelViewSet, FilmeTecnicaAnimacaoViewSet, FormatoViewSet, GeneroViewSet, GeneroSubViewSet, HelpdeskViewSet, IdiomaViewSet, LogSistemaViewSet, MaterialSobreFilmeViewSet, ModuloViewSet, MunicipioViewSet, NewsletterViewSet, PedidoViewSet, PedidoHistoricoViewSet, PedidoProgramaViewSet, PedidoStatusViewSet, ProdutorViewSet, ProgramaViewSet, ProgramaComentarioViewSet, ProgramaFilmeViewSet, ProgramaImagemViewSet, ProgramaProducaoViewSet, ProgramaSerieViewSet, PublicacaoViewSet, PublicacaoClasseViewSet, PublicacaoComentarioViewSet, PublicacaoSubclasseViewSet, RegiaoViewSet, RepresentanteViewSet, SerieViewSet, SessaoViewSet, SessaoComentarioViewSet, SessaoFilmeViewSet, SessaoMidiaViewSet, SessaoRelatorioViewSet, SistemaViewSet, TarefaViewSet, TarefaPerguntaViewSet, TecnicaAnimacaoViewSet, TempQuemAdquiriuViewSet, UsuarioViewSet, UsuarioPermissaoViewSet, ValorLoteViewSet
+from core.views import  *
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
@@ -73,7 +73,6 @@ router.register(r'tarefapergunta',  TarefaPerguntaViewSet, 'TarefaPerguntaList')
 router.register(r'tecnicaanimacao',  TecnicaAnimacaoViewSet, 'TecnicaAnimacaoList')
 router.register(r'tempquemadquiriu',  TempQuemAdquiriuViewSet, 'TempQuemAdquiriuList')
 router.register(r'usuario',  UsuarioViewSet, 'UsuarioList')
-router.register(r'usuariopermissao',  UsuarioPermissaoViewSet, 'UsuarioPermissaoList')
 router.register(r'valorlote',  ValorLoteViewSet, 'ValorLoteList')
 
 urlpatterns = patterns('',

@@ -1,12 +1,3 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
-#
-# Also note: You'll have to insert the output of 'django-admin.py sqlcustom [app_label]'
-# into your database.
 from __future__ import unicode_literals
 
 from django.db import models
@@ -50,7 +41,6 @@ class Associado(models.Model):
     res_tel2 = models.CharField(max_length=50, blank=True)
     res_tel3_ddd = models.CharField(max_length=3, blank=True)
     res_tel3 = models.CharField(max_length=50, blank=True)
-    senha = models.CharField(max_length=100, blank=True)
     info_atividades = models.TextField(blank=True)
     info_como_serao_utilizados = models.TextField(blank=True)
     info_cod_sabendo = models.IntegerField(blank=True, null=True)
@@ -104,6 +94,7 @@ class Associado(models.Model):
     exibir_pontos = models.IntegerField(blank=True, null=True)
     info_sess_fechado = models.IntegerField(blank=True, null=True)
     info_sess_aberto = models.IntegerField(blank=True, null=True)
+    auth_user_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -112,8 +103,8 @@ class Associado(models.Model):
 
 class AssociadoCircuito(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    circuito_id = models.IntegerField(blank=True, null=True)
-    associado_id = models.IntegerField(blank=True, null=True)
+    circuito = models.ForeignKey('Circuito', blank=True, null=True)
+    associado = models.ForeignKey(Associado, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -123,7 +114,7 @@ class AssociadoCircuito(models.Model):
 class AssociadoHistorico(models.Model):
     id = models.BigIntegerField(primary_key=True)
     data = models.DateTimeField(blank=True, null=True)
-    associado_id = models.IntegerField(blank=True, null=True)
+    associado = models.ForeignKey(Associado, blank=True, null=True)
     status = models.IntegerField(blank=True, null=True)
     texto = models.TextField(blank=True)
     acao = models.CharField(max_length=255, blank=True)
@@ -180,6 +171,25 @@ class Atendimento(models.Model):
         db_table = 'atendimento'
 
 
+
+class AuthUser(models.Model):
+    id = models.IntegerField(primary_key=True)  # AutoField?
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.IntegerField()
+    username = models.CharField(unique=True, max_length=30)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.CharField(max_length=75)
+    is_staff = models.IntegerField()
+    is_active = models.IntegerField()
+    date_joined = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
 class Circuito(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     nome = models.CharField(max_length=255, blank=True)
@@ -204,11 +214,11 @@ class CircuitoAcesso(models.Model):
     sess = models.CharField(max_length=50, blank=True)
     grupo_id = models.IntegerField(blank=True, null=True)
     ultimo_acesso = models.DateTimeField(blank=True, null=True)
-    senha = models.CharField(max_length=50, blank=True)
     nome_contato = models.CharField(max_length=255, blank=True)
     circuito = models.ForeignKey(Circuito, blank=True, null=True)
     confirmada = models.IntegerField(blank=True, null=True)
     bloqueada = models.IntegerField(blank=True, null=True)
+    auth_user_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -229,8 +239,8 @@ class CircuitoGrupo(models.Model):
 
 class CircuitoSerie(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    circuito_id = models.IntegerField(blank=True, null=True)
-    serie_id = models.IntegerField(blank=True, null=True)
+    circuito = models.ForeignKey(Circuito, blank=True, null=True)
+    serie = models.ForeignKey('Serie', blank=True, null=True)
 
     class Meta:
         managed = False
@@ -334,13 +344,13 @@ class Curador(models.Model):
     email = models.CharField(max_length=200, blank=True)
     curriculo = models.TextField(blank=True)
     obs = models.TextField(blank=True)
-    senha = models.CharField(max_length=200, blank=True)
     adm = models.IntegerField(blank=True, null=True)
     grupo = models.IntegerField(blank=True, null=True)
     sess = models.CharField(max_length=60, blank=True)
     ultimo_acesso = models.DateTimeField(blank=True, null=True)
     confirmada = models.IntegerField(blank=True, null=True)
     bloqueada = models.IntegerField(blank=True, null=True)
+    auth_user_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -349,7 +359,7 @@ class Curador(models.Model):
 
 class CuradorFilme(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    filme_id = models.BigIntegerField(blank=True, null=True)
+    filme = models.ForeignKey('Filme', blank=True, null=True)
     curador = models.ForeignKey(Curador, blank=True, null=True)
     data = models.DateTimeField(blank=True, null=True)
     data_atual = models.DateTimeField(blank=True, null=True)
@@ -388,6 +398,53 @@ class Diretor(models.Model):
         db_table = 'diretor'
 
 
+class DjangoAdminLog(models.Model):
+    id = models.IntegerField(primary_key=True)  # AutoField?
+    action_time = models.DateTimeField()
+    object_id = models.TextField(blank=True)
+    object_repr = models.CharField(max_length=200)
+    action_flag = models.IntegerField()
+    change_message = models.TextField()
+    content_type = models.ForeignKey('DjangoContentType', blank=True, null=True)
+    user = models.ForeignKey(AuthUser)
+
+    class Meta:
+        managed = False
+        db_table = 'django_admin_log'
+
+
+class DjangoContentType(models.Model):
+    id = models.IntegerField(primary_key=True)  # AutoField?
+    name = models.CharField(max_length=100)
+    app_label = models.CharField(max_length=100)
+    model = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'django_content_type'
+
+
+class DjangoMigrations(models.Model):
+    id = models.IntegerField(primary_key=True)  # AutoField?
+    app = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
+    applied = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_migrations'
+
+
+class DjangoSession(models.Model):
+    session_key = models.CharField(primary_key=True, max_length=40)
+    session_data = models.TextField()
+    expire_date = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'django_session'
+
+
 class Estado(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     nome = models.CharField(max_length=255, blank=True)
@@ -397,6 +454,52 @@ class Estado(models.Model):
     class Meta:
         managed = False
         db_table = 'estado'
+
+
+class Estoque(models.Model):
+    num_serie = models.IntegerField(primary_key=True)
+    titulo = models.CharField(max_length=255, db_index=True)
+    qtde_online = models.IntegerField(blank=True, null=True)
+    aguardando_pgto = models.IntegerField(blank=True, null=True)
+    pgto_efetuado = models.IntegerField(blank=True, null=True)
+    enviado = models.IntegerField(blank=True, null=True)
+    qtde_estoque = models.IntegerField(blank=True, null=True)
+    disponivel_aquisicao = models.IntegerField(blank=True, null=True)
+    programa_id = models.IntegerField(blank=True, null=True)
+    qtde_adquirida_associados = models.IntegerField(blank=True, null=True)
+    qtde_doada = models.IntegerField(blank=True, null=True)
+    qtde_realizador = models.IntegerField(blank=True, null=True)
+    qtde_outros = models.IntegerField(blank=True, null=True)
+    pedidos_pgto_confirmado = models.CharField(max_length=2500, null=True)
+
+    @property
+    def disponivel(self):
+        return 'SIM' if self.disponivel_aquisicao == 1 else 'NAO'
+
+    @property
+    def total_estoque(self):
+        return self.qtde_online + self.qtde_estoque
+
+    @property
+    def total_geral(self):
+        return self.total_estoque + self.aguardando_pgto + self.pgto_efetuado + self.enviado
+
+    @property
+    def total_adquirido(self):
+        return self.qtde_adquirida_associados + self.qtde_doada + self.qtde_realizador + self.qtde_outros
+
+    class Meta:
+        managed = False
+        db_table = 'estoque'
+
+    def save(self, **kwargs):
+        raise NotImplementedError
+
+    def save(self, **kwargs):
+        raise NotImplementedError
+
+    def delete(self, **kwargs):
+        raise NotImplementedError
 
 
 class Evento(models.Model):
@@ -437,20 +540,20 @@ class Filme(models.Model):
     sinopse_editada = models.TextField(blank=True)
     sinopse_en = models.TextField(blank=True)
     uf = models.CharField(max_length=50, blank=True)
-    estado_id = models.IntegerField(blank=True, null=True)
+    estado = models.ForeignKey(Estado, blank=True, null=True)
     cidade = models.CharField(max_length=50, blank=True)
-    municipio_id = models.IntegerField(blank=True, null=True)
+    municipio = models.ForeignKey('Municipio', blank=True, null=True)
     pais = models.CharField(max_length=50, blank=True)
     janela_projecao_pelicula = models.IntegerField(blank=True, null=True)
     ano_captacao = models.TextField(blank=True)  # This field type is a guess.
     ano_lancamento = models.TextField(blank=True)  # This field type is a guess.
-    idioma_id = models.IntegerField(blank=True, null=True)
+    idioma = models.ForeignKey('Idioma', blank=True, null=True)
     faixa_etaria_id = models.IntegerField(blank=True, null=True)
     som = models.IntegerField(blank=True, null=True)
     tema = models.TextField(blank=True)
     formato_som = models.IntegerField(blank=True, null=True)
     formato = models.IntegerField(blank=True, null=True)
-    genero_id = models.IntegerField(blank=True, null=True)
+    genero = models.ForeignKey('Genero', blank=True, null=True)
     genero_sub_id = models.IntegerField(blank=True, null=True)
     formato_captacao_id = models.IntegerField(blank=True, null=True)
     suporte_captacao_outro = models.CharField(max_length=255, blank=True)
@@ -747,6 +850,21 @@ class Newsletter(models.Model):
         db_table = 'newsletter'
 
 
+class OldUsuarioPermissao(models.Model):
+    id = models.IntegerField(primary_key=True)  # AutoField?
+    usuario = models.ForeignKey('Usuario', blank=True, null=True)
+    modulo = models.IntegerField(blank=True, null=True)
+    poder = models.IntegerField(blank=True, null=True)
+    cad = models.IntegerField(blank=True, null=True)
+    alt = models.IntegerField(blank=True, null=True)
+    rel = models.IntegerField(blank=True, null=True)
+    exc = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'old_usuario_permissao'
+
+
 class Pedido(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     data_cadastro = models.DateTimeField(blank=True, null=True)
@@ -796,7 +914,7 @@ class PedidoPrograma(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     programa = models.ForeignKey('Programa', blank=True, null=True)
     usuario_id = models.IntegerField(blank=True, null=True)
-    pedido_id = models.IntegerField(blank=True, null=True)
+    pedido = models.ForeignKey(Pedido, blank=True, null=True)
     tipo_usuario = models.IntegerField(blank=True, null=True)
     tipo_pedido = models.IntegerField(blank=True, null=True)
     favorito = models.IntegerField(blank=True, null=True)
@@ -865,7 +983,7 @@ class ProgramaComentario(models.Model):
     titulo = models.CharField(max_length=255)
     comentario = models.TextField()
     programa_id = models.IntegerField()
-    comantario_pai_id = models.IntegerField()
+    comentario_pai = models.ForeignKey('self', blank=True, null=True)
     data = models.DateTimeField()
     filmes = models.TextField(blank=True)
     exibir = models.IntegerField(blank=True, null=True)
@@ -1004,10 +1122,10 @@ class Representante(models.Model):
     sess = models.CharField(max_length=50, blank=True)
     grupo_id = models.IntegerField(blank=True, null=True)
     ultimo_acesso = models.DateTimeField(blank=True, null=True)
-    senha = models.CharField(max_length=50, blank=True)
     nome_contato = models.CharField(max_length=255, blank=True)
     bloqueada = models.IntegerField(blank=True, null=True)
     confirmada = models.IntegerField(blank=True, null=True)
+    auth_user_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -1137,7 +1255,7 @@ class Tarefa(models.Model):
 
 class TarefaPergunta(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
-    tarefa_id = models.IntegerField(blank=True, null=True)
+    tarefa = models.ForeignKey(Tarefa, blank=True, null=True)
     data = models.DateTimeField(blank=True, null=True)
     texto = models.TextField(blank=True)
 
@@ -1159,12 +1277,12 @@ class TempQuemAdquiriu(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     data = models.DateTimeField(blank=True, null=True)
     titulo_programa = models.CharField(max_length=255, blank=True)
-    programa_id = models.IntegerField(blank=True, null=True)
+    programa = models.ForeignKey(Programa, blank=True, null=True)
     num_programa = models.IntegerField(blank=True, null=True)
-    estado_id = models.IntegerField(blank=True, null=True)
-    municipio_id = models.IntegerField(blank=True, null=True)
+    estado = models.ForeignKey(Estado, blank=True, null=True)
+    municipio = models.ForeignKey(Municipio, blank=True, null=True)
     nome_ponto = models.CharField(max_length=255, blank=True)
-    associado_id = models.IntegerField(blank=True, null=True)
+    associado = models.ForeignKey(Associado, blank=True, null=True)
     ponto = models.IntegerField(blank=True, null=True)
 
     class Meta:
@@ -1176,7 +1294,6 @@ class Usuario(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
     login = models.CharField(unique=True, max_length=50)
     nome = models.CharField(max_length=50, blank=True)
-    senha = models.CharField(max_length=100, blank=True)
     adm = models.IntegerField()
     grupo_id = models.IntegerField()
     sess = models.CharField(max_length=50, blank=True)
@@ -1192,25 +1309,11 @@ class Usuario(models.Model):
     email = models.CharField(max_length=100, blank=True)
     data_nascimento = models.DateField(blank=True, null=True)
     escolaridade = models.IntegerField(blank=True, null=True)
+    auth_user_id = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'usuario'
-
-
-class UsuarioPermissao(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
-    usuario = models.ForeignKey(Usuario, blank=True, null=True)
-    modulo = models.IntegerField(blank=True, null=True)
-    poder = models.IntegerField(blank=True, null=True)
-    cad = models.IntegerField(blank=True, null=True)
-    alt = models.IntegerField(blank=True, null=True)
-    rel = models.IntegerField(blank=True, null=True)
-    exc = models.IntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'usuario_permissao'
 
 
 class ValorLote(models.Model):
@@ -1221,48 +1324,3 @@ class ValorLote(models.Model):
     class Meta:
         managed = False
         db_table = 'valor_lote'
-
-class Estoque(models.Model):
-    num_serie = models.IntegerField(primary_key=True)
-    titulo = models.CharField(max_length=255, db_index=True)
-    qtde_online = models.IntegerField(blank=True, null=True)
-    aguardando_pgto = models.IntegerField(blank=True, null=True)
-    pgto_efetuado = models.IntegerField(blank=True, null=True)
-    enviado = models.IntegerField(blank=True, null=True)
-    qtde_estoque = models.IntegerField(blank=True, null=True)
-    disponivel_aquisicao = models.IntegerField(blank=True, null=True)
-    programa_id = models.IntegerField(blank=True, null=True)
-    qtde_adquirida_associados = models.IntegerField(blank=True, null=True)
-    qtde_doada = models.IntegerField(blank=True, null=True)
-    qtde_realizador = models.IntegerField(blank=True, null=True)
-    qtde_outros = models.IntegerField(blank=True, null=True)
-    pedidos_pgto_confirmado = models.CharField(max_length=2500, null=True)
-
-    @property
-    def disponivel(self):
-        return 'SIM' if self.disponivel_aquisicao == 1 else 'NAO'
-
-    @property
-    def total_estoque(self):
-        return self.qtde_online + self.qtde_estoque
-
-    @property
-    def total_geral(self):
-        return self.total_estoque + self.aguardando_pgto + self.pgto_efetuado + self.enviado
-
-    @property
-    def total_adquirido(self):
-        return self.qtde_adquirida_associados + self.qtde_doada + self.qtde_realizador + self.qtde_outros
-
-    class Meta:
-        managed = False
-        db_table = 'estoque'
-
-    def save(self, **kwargs):
-        raise NotImplementedError
-
-    def save(self, **kwargs):
-        raise NotImplementedError
-
-    def delete(self, **kwargs):
-        raise NotImplementedError

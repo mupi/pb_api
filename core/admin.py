@@ -10,13 +10,13 @@ admin.site.register(Associado, AssociadoAdmin)
 
 class AssociadoCircuitoAdmin(admin.ModelAdmin):
     model = AssociadoCircuito
-    list_display = ('id', 'circuito_id', 'associado_id')
+    list_display = ('id', 'circuito', 'associado')
 
 admin.site.register(AssociadoCircuito, AssociadoCircuitoAdmin)
 
 class AssociadoHistoricoAdmin(admin.ModelAdmin):
     model = AssociadoHistorico
-    list_display = ('id', 'associado_id')
+    list_display = ('id', 'associado')
 
 admin.site.register(AssociadoHistorico, AssociadoHistoricoAdmin)
 
@@ -52,7 +52,7 @@ admin.site.register(CircuitoGrupo, CircuitoGrupoAdmin)
 
 class CircuitoSerieAdmin(admin.ModelAdmin):
     model = CircuitoSerie
-    list_display = ('id', 'circuito_id', 'serie_id')
+    list_display = ('id', 'circuito', 'serie')
 
 admin.site.register(CircuitoSerie, CircuitoSerieAdmin)
 
@@ -95,7 +95,7 @@ admin.site.register(Curador, CuradorAdmin)
 
 class CuradorFilmeAdmin(admin.ModelAdmin):
     model = CuradorFilme
-    list_display = ('id', 'filme_id', 'curador')
+    list_display = ('id', 'filme', 'curador')
 
 admin.site.register(CuradorFilme, CuradorFilmeAdmin)
 
@@ -258,7 +258,7 @@ admin.site.register(PedidoHistorico, PedidoHistoricoAdmin)
 
 class PedidoProgramaAdmin(admin.ModelAdmin):
     model = PedidoPrograma
-    list_display = ('id', 'programa', 'usuario_id', 'pedido_id')
+    list_display = ('id', 'programa', 'usuario_id', 'pedido')
 
 admin.site.register(PedidoPrograma, PedidoProgramaAdmin)
 
@@ -399,7 +399,7 @@ admin.site.register(Tarefa, TarefaAdmin)
 
 class TarefaPerguntaAdmin(admin.ModelAdmin):
     model = TarefaPergunta
-    list_display = ('id', 'tarefa_id', 'data')
+    list_display = ('id', 'tarefa', 'data')
 
 admin.site.register(TarefaPergunta, TarefaPerguntaAdmin)
 
@@ -412,7 +412,7 @@ admin.site.register(TecnicaAnimacao, TecnicaAnimacaoAdmin)
 
 class TempQuemAdquiriuAdmin(admin.ModelAdmin):
     model = TempQuemAdquiriu    
-    list_display = ('id', 'associado_id')
+    list_display = ('id', 'associado')
 
 admin.site.register(TempQuemAdquiriu, TempQuemAdquiriuAdmin)
 
@@ -421,13 +421,6 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'login', 'nome')
 
 admin.site.register(Usuario, UsuarioAdmin)
-
-
-class UsuarioPermissaoAdmin(admin.ModelAdmin):
-    model = UsuarioPermissao    
-    list_display = ('id', 'usuario', 'modulo')
-
-admin.site.register(UsuarioPermissao, UsuarioPermissaoAdmin)
 
 
 class ValorLoteAdmin(admin.ModelAdmin):

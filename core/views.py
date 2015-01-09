@@ -3,8 +3,8 @@ from rest_framework import viewsets, generics, status
 from rest_framework.response import Response
 from rest_framework.decorators import detail_route, api_view
 
-from .models import  Associado, AssociadoCircuito, AssociadoHistorico, AssociadoPonto, Atendimento, Circuito, CircuitoAcesso, CircuitoGrupo, CircuitoSerie, Contrato, ContratoAssinatura, ContratoDeposito, Convenio, Cupom, Curador, CuradorFilme, Diretor, Estado, Evento, FaixaEtaria, Filme, FilmeComentario, FilmeDiretor, FilmeImagem, FilmeInscritoPb, FilmeLegenda, FilmeMaterialSobreFilme, FilmeSerie, FilmeSuporteDisponivel, FilmeTecnicaAnimacao, Formato, Genero, GeneroSub, Helpdesk, Idioma, LogSistema, MaterialSobreFilme, Modulo, Municipio, Newsletter, Pedido, PedidoHistorico, PedidoPrograma, PedidoStatus, Produtor, Programa, ProgramaComentario, ProgramaFilme, ProgramaImagem, ProgramaProducao, ProgramaSerie, Publicacao, PublicacaoClasse, PublicacaoComentario, PublicacaoSubclasse, Regiao, Representante, Serie, Sessao, SessaoComentario, SessaoFilme, SessaoMidia, SessaoRelatorio, Sistema, Tarefa, TarefaPergunta, TecnicaAnimacao, TempQuemAdquiriu, Usuario, UsuarioPermissao, ValorLote
-from .serializers import  AssociadoSerializer, AssociadoCircuitoSerializer, AssociadoHistoricoSerializer, AssociadoPontoSerializer, AtendimentoSerializer, CircuitoSerializer, CircuitoAcessoSerializer, CircuitoGrupoSerializer, CircuitoSerieSerializer, ContratoSerializer, ContratoAssinaturaSerializer, ContratoDepositoSerializer, ConvenioSerializer, CupomSerializer, CuradorSerializer, CuradorFilmeSerializer, DiretorSerializer, EstadoSerializer, EventoSerializer, FaixaEtariaSerializer, FilmeSerializer, FilmeComentarioSerializer, FilmeDiretorSerializer, FilmeImagemSerializer, FilmeInscritoPbSerializer, FilmeLegendaSerializer, FilmeMaterialSobreFilmeSerializer, FilmeSerieSerializer, FilmeSuporteDisponivelSerializer, FilmeTecnicaAnimacaoSerializer, FormatoSerializer, GeneroSerializer, GeneroSubSerializer, HelpdeskSerializer, IdiomaSerializer, LogSistemaSerializer, MaterialSobreFilmeSerializer, ModuloSerializer, MunicipioSerializer, NewsletterSerializer, PedidoSerializer, PedidoHistoricoSerializer, PedidoProgramaSerializer, PedidoStatusSerializer, ProdutorSerializer, ProgramaSerializer, ProgramaComentarioSerializer, ProgramaFilmeSerializer, ProgramaImagemSerializer, ProgramaProducaoSerializer, ProgramaSerieSerializer, PublicacaoSerializer, PublicacaoClasseSerializer, PublicacaoComentarioSerializer, PublicacaoSubclasseSerializer, RegiaoSerializer, RepresentanteSerializer, SerieSerializer, SessaoSerializer, SessaoComentarioSerializer, SessaoFilmeSerializer, SessaoMidiaSerializer, SessaoRelatorioSerializer, SistemaSerializer, TarefaSerializer, TarefaPerguntaSerializer, TecnicaAnimacaoSerializer, TempQuemAdquiriuSerializer, UsuarioSerializer, UsuarioPermissaoSerializer, ValorLoteSerializer
+from .models import  *
+from .serializers import  *
 
 class AssociadoViewSet(viewsets.ModelViewSet): 
     queryset = Associado.objects.all()
@@ -282,10 +282,7 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
  
-class UsuarioPermissaoViewSet(viewsets.ModelViewSet): 
-    queryset = UsuarioPermissao.objects.all()
-    serializer_class = UsuarioPermissaoSerializer
- 
+
 class ValorLoteViewSet(viewsets.ModelViewSet): 
     queryset = ValorLote.objects.all()
     serializer_class = ValorLoteSerializer
